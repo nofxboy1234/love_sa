@@ -195,36 +195,10 @@ function game_keypressed(key, isrepeat)
 end
 
 function tiled_map_load()
-  global = {}
-  global.limitDrawing = false     -- If true then the drawing range example is shown
-  global.benchmark = false        -- If true the map is drawn 20 times instead of 1
-  global.useBatch = false         -- If true then the layers are rendered with sprite batches
-  global.tx = 0                   -- X translation of the screen
-  global.ty = 0                   -- Y translation of the screen
-  global.scale = 1                -- Scale of the screen
-
-  -- Setup
-  loader.path = "maps/"
-  map = loader.load("01_01.tmx")
-  -- map.drawObjects = true
-
 
 end
 
 function tiled_map_draw()
-  -- Set sprite batches if they are different than the settings
-  -- map.useSpriteBatch = global.useBatch
 
-  -- Scale and translate the game screen for map drawing
-  -- local ftx, fty = math.floor(global.tx), math.floor(global.ty)
-  -- love.graphics.push()
-  -- love.graphics.scale(global.scale)
-  -- love.graphics.translate(ftx, fty)
-
-  -- map:autoDrawRange(ftx, fty, global.scale, 0)
-  map:draw()
-
-  -- Reset the scale and translation
-  -- love.graphics.pop()
 end
 
