@@ -1,0 +1,5 @@
+*.py
+Libraries/
+Resources/
+lua_debugger/
+maps/
