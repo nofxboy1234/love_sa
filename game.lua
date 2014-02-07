@@ -1,5 +1,5 @@
-loader = require("Libraries.AdvTiledLoader.Loader")
 HC = require("Libraries.hardoncollider")
+local sti = require("Simple-Tiled-Implementation.sti")
 
 local player_timeslice = 1/540 -- 540 FPS for player movement
 local player_blocked = false
@@ -47,9 +47,9 @@ function game_load()
   -- add a rectanglto the hc scene
   -- rect = collider:addRectangle(200, 400, 400, 20)
 
-  tiled_map_load()
+  sti_load()
 
-  Collider = HC(100, on_collision, collision_stop)
+  -- Collider = HC(100, on_collision, collision_stop)
 
   player = {}
   player.image = love.graphics.newImage("Resources/Images/Sprite_shapeyV01/Untitled-3_frame_0.png")
@@ -60,7 +60,7 @@ function game_load()
   player.height = player.image:getHeight() * player.scale
   player.velocity = {}
   player.velocity.x = 400
-  player.velocity.y = 800
+  player.velocity.y = 400
 
   hitbox = {}
   hitbox.width = player.width - 15
@@ -69,9 +69,8 @@ function game_load()
   hitbox.y = player.y + (player.height * 0.5) - (hitbox.height * 0.5)
   player.hitbox = hitbox
 
-  hc_hitbox = Collider:addRectangle(hitbox.x, hitbox.y, hitbox.width,
-    hitbox.height)
-
+  -- hc_hitbox = Collider:addRectangle(hitbox.x, hitbox.y, hitbox.width,
+  --   hitbox.height)
 
   ground_hitbox = {}
   ground_hitbox.width = 1280
@@ -80,8 +79,8 @@ function game_load()
   ground_hitbox.y = 673
   ground_hitbox.colour = {255, 0, 0, 255}
 
-  hc_ground_hitbox = Collider:addRectangle(ground_hitbox.x, ground_hitbox.y,
-    ground_hitbox.width, ground_hitbox.height)
+  -- hc_ground_hitbox = Collider:addRectangle(ground_hitbox.x, ground_hitbox.y,
+  --   ground_hitbox.width, ground_hitbox.height)
 
   crate_hitbox = {}
   crate_hitbox.width = 30
@@ -90,8 +89,8 @@ function game_load()
   crate_hitbox.y = 642
   crate_hitbox.colour = {255, 0, 0, 255}
 
-  hc_crate_hitbox = Collider:addRectangle(crate_hitbox.x, crate_hitbox.y,
-    crate_hitbox.width, crate_hitbox.height)
+  -- hc_crate_hitbox = Collider:addRectangle(crate_hitbox.x, crate_hitbox.y,
+  --   crate_hitbox.width, crate_hitbox.height)
 end
 
 function hc_hitbox_update(dt)
@@ -111,8 +110,8 @@ function hc_hitbox_update(dt)
   if love.keyboard.isDown("down") then
     player.y = player.y + (player.velocity.y * dt)
   end
-  if love.keyboard.isDown("x") then
-    player.velocity.y = player.velocity.y + (gravity * dt)
+  if love.keyboard.isDown("up") then
+    -- player.velocity.y = player.velocity.y + (gravity * dt)
     player.y = player.y - (player.velocity.y * dt)
   end
 
@@ -123,10 +122,12 @@ function hc_hitbox_update(dt)
   -- update the center co-ord of the hitbox to follow player image
   hitbox.x = player.x + (player.width * 0.5)
   hitbox.y = player.y + (player.height * 0.5)
-  hc_hitbox:moveTo(hitbox.x, hitbox.y)
+  -- hc_hitbox:moveTo(hitbox.x, hitbox.y)
 end
 
 function game_update(dt)
+  sti_update()
+
   fps = love.timer.getFPS()
 
   -- fix collision tunneling
@@ -139,20 +140,20 @@ function game_update(dt)
     dt = dt - player_timeslice
     -- update player with finer granularity timeslice
     hc_hitbox_update(player_timeslice)
-    Collider:update(player_timeslice)
+    -- Collider:update(player_timeslice)
   end
 
-  hc_hitbox_update(dt)
+  -- hc_hitbox_update(dt)
   -- ******
 
   -- Check for collisions
-  Collider:update(dt)
+  -- Collider:update(dt)
 
 end
 
 function game_draw()
 
-  tiled_map_draw()
+  sti_draw()
 
   if facing_right then
     love.graphics.draw(player.image, player.x, player.y, 0, player.scale, player.scale)
@@ -165,17 +166,17 @@ function game_draw()
   -- draw player hitbox
   love.graphics.setColor(0, 255, 0, 255)
   -- love.graphics.rectangle("line", hitbox.x, hitbox.y, hitbox.width, hitbox.height)
-  hc_hitbox:draw("line")
+  -- hc_hitbox:draw("line")
 
   love.graphics.setColor(ground_hitbox.colour)
   -- love.graphics.rectangle("line", ground_hitbox.x, ground_hitbox.y,
   --   ground_hitbox.width, ground_hitbox.height)
-  hc_ground_hitbox:draw("line")
+  -- hc_ground_hitbox:draw("line")
 
   love.graphics.setColor(crate_hitbox.colour)
   -- love.graphics.rectangle("line", crate_hitbox.x, crate_hitbox.y,
   --   crate_hitbox.width, crate_hitbox.height)
-  hc_crate_hitbox:draw("line")
+  -- hc_crate_hitbox:draw("line")
 
 
   love.graphics.setColor(0, 0, 0, 255)
@@ -194,11 +195,64 @@ function game_keypressed(key, isrepeat)
   end
 end
 
-function tiled_map_load()
+function sti_load()
+  -- grab window size
+  windowWidth = love.graphics.getWidth()
+  windowHeight = love.graphics.getHeight()
 
+  -- Load a map exported to Lua from Tiled
+  map = sti.new("maps/01_01")
+
+  -- Set a collision map to use with your own collision code
+  collision = map:getCollisionMap("Collision_Layer")
+
+  -- Create a custom layer
+  map:addCustomLayer("Sprite_Layer", 3)
+
+  -- Add data to custom layer
+  local spriteLayer = map.layers["Sprite_Layer"]
+  spriteLayer.sprites = {
+    player = {
+      image = love.graphics.newImage("Resources/Images/Sprite_shapeyV01/Untitled-3_frame_0.png"),
+      x = 64,
+      y = 64,
+      r = 0,
+    }
+  }
+
+  -- Update callback for Custom Layer
+  function spriteLayer:update(dt)
+      for _, sprite in pairs(self.sprites) do
+          sprite.r = sprite.r + math.rad(90 * dt)
+      end
+  end
+
+  -- Draw callback for Custom Layer
+  function spriteLayer:draw()
+      for _, sprite in pairs(self.sprites) do
+          local x = math.floor(sprite.x)
+          local y = math.floor(sprite.y)
+          local r = sprite.r
+          love.graphics.draw(sprite.image, x, y, r)
+      end
+  end
 end
 
-function tiled_map_draw()
+function sti_update(dt)
+  map:update(dt)
+end
 
+function sti_draw()
+  -- Translation would normally be based on a player's x/y
+  local translateX = player.x
+  local translateY = player.y
+
+  -- Draw Range culls unnecessary tiles
+  map:setDrawRange(translateX, translateY, windowWidth, windowHeight)
+
+  map:draw()
+
+  -- Draw Collision Map (useful for debugging)
+  map:drawCollisionMap(collision)
 end
 
