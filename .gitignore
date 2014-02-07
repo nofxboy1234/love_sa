@@ -5,3 +5,5 @@ lua_debugger/
 maps/
 Simple-Tiled-Implementation/
 main~.lua
+assets/
+lib/
