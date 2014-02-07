@@ -1,5 +1,5 @@
 local sti = require "lib.sti.sti"
--- local pl = require("lib.penlight.lua.pl")
+local pretty = require("pl.pretty")
 
 function love.load()
     -- Grab window size
@@ -49,23 +49,23 @@ function love.load()
         end
     end
 
-  print_joystick()
+  get_joystick()
 end
 
 function love.update(dt)
     map:update(dt)
 
-  if love.keyboard.isDown("right") then
+  if love.keyboard.isDown("right") or joystick_01:isDown(12) then
     spriteLayer.sprites.player.x = spriteLayer.sprites.player.x + (spriteLayer.sprites.player.velocity.x * dt)
   end
-  if love.keyboard.isDown("left") then
+  if love.keyboard.isDown("left") or joystick_01:isDown(11) then
     spriteLayer.sprites.player.x = spriteLayer.sprites.player.x - (spriteLayer.sprites.player.velocity.x * dt)
   end
 
-  if love.keyboard.isDown("down") then
+  if love.keyboard.isDown("down") or joystick_01:isDown(14) then
     spriteLayer.sprites.player.y = spriteLayer.sprites.player.y + (spriteLayer.sprites.player.velocity.y * dt)
   end
-  if love.keyboard.isDown("up") then
+  if love.keyboard.isDown("up") or joystick_01:isDown(13) then
     spriteLayer.sprites.player.y = spriteLayer.sprites.player.y - (spriteLayer.sprites.player.velocity.y * dt)
   end
 end
@@ -84,18 +84,21 @@ function love.draw()
     map:drawCollisionMap(collision)
 end
 
-function print_joystick()
-  local joysticks = love.joystick.getJoysticks()
-  for i, joystick in ipairs(joysticks) do
-    print("name:" .. joystick:getName())
-    print("isGamepad:" .. tostring(joystick:isGamepad()))
-    print("getID:" .. tostring(joystick:getID()))
-    print("isDown(12):" .. tostring(joystick:isDown(12)))
-    print("isVibrationSupported:" .. tostring(joystick:isVibrationSupported()))
-    -- love.graphics.print(tostring(joystick:setVibration(0.5, 0.5)), 600, i * 20)
-    print("isConnected:" .. tostring(joystick:isConnected()) .. "\n")
-  end
-  print("getJoystickCount:" .. tostring(love.joystick.getJoystickCount()))
+function get_joystick()
+  joystick_01 = love.joystick.getJoysticks()[1]
+  -- pretty.dump(joysticks[0])
+
+  -- for i, joystick in ipairs(joysticks) do
+
+  --   print("name:" .. joystick:getName())
+  --   print("isGamepad:" .. tostring(joystick:isGamepad()))
+  --   print("getID:" .. tostring(joystick:getID()))
+  --   print("isDown(12):" .. tostring(joystick:isDown(12)))
+  --   print("isVibrationSupported:" .. tostring(joystick:isVibrationSupported()))
+  --   -- love.graphics.print(tostring(joystick:setVibration(0.5, 0.5)), 600, i * 20)
+  --   print("isConnected:" .. tostring(joystick:isConnected()) .. "\n")
+  -- end
+  -- print("getJoystickCount:" .. tostring(love.joystick.getJoystickCount()))
 
 
 end
