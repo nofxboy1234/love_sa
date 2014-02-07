@@ -1,4 +1,5 @@
 local sti = require "lib.sti.sti"
+-- local pl = require("lib.penlight.lua.pl")
 
 function love.load()
     -- Grab window size
@@ -47,6 +48,8 @@ function love.load()
             love.graphics.draw(sprite.image, x, y)
         end
     end
+
+  print_joystick()
 end
 
 function love.update(dt)
@@ -79,4 +82,20 @@ function love.draw()
 
     -- Draw Collision Map (useful for debugging)
     map:drawCollisionMap(collision)
+end
+
+function print_joystick()
+  local joysticks = love.joystick.getJoysticks()
+  for i, joystick in ipairs(joysticks) do
+    print("name:" .. joystick:getName())
+    print("isGamepad:" .. tostring(joystick:isGamepad()))
+    print("getID:" .. tostring(joystick:getID()))
+    print("isDown(12):" .. tostring(joystick:isDown(12)))
+    print("isVibrationSupported:" .. tostring(joystick:isVibrationSupported()))
+    -- love.graphics.print(tostring(joystick:setVibration(0.5, 0.5)), 600, i * 20)
+    print("isConnected:" .. tostring(joystick:isConnected()) .. "\n")
+  end
+  print("getJoystickCount:" .. tostring(love.joystick.getJoystickCount()))
+
+
 end
