@@ -215,6 +215,87 @@ return {
           properties = {}
         }
       }
+    },
+    {
+      type = "objectgroup",
+      name = "platform_objects",
+      visible = true,
+      opacity = 1,
+      properties = {},
+      objects = {
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 350.667,
+          y = 345.333,
+          width = 75.3333,
+          height = 49.3333,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 662.667,
+          y = 368,
+          width = 34.6667,
+          height = 21.3333,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 725.333,
+          y = 268,
+          width = 160,
+          height = 53.3333,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 234,
+          y = 190,
+          width = 136.667,
+          height = 50,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 560,
+          y = 515.333,
+          width = 247.333,
+          height = 8.66667,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 1000.67,
+          y = 513.333,
+          width = 130.667,
+          height = 150.667,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
     }
   }
 }
