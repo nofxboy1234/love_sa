@@ -89,7 +89,7 @@ function love.load()
 
   get_joystick()
 
-  cam = camera(spriteLayer.sprites.player.x, spriteLayer.sprites.player.y)
+  -- cam = camera(spriteLayer.sprites.player.x, spriteLayer.sprites.player.y)
 end
 
 
@@ -99,9 +99,9 @@ function love.update(dt)
   collider:update(dt)
 
   -- move camera
-  local dx = spriteLayer.sprites.player.x - cam.x
-  local dy = spriteLayer.sprites.player.x - cam.x
-  cam:move(dx / 2, dy / 2)
+  -- local dx = spriteLayer.sprites.player.x - cam.x
+  -- local dy = spriteLayer.sprites.player.x - cam.x
+  -- cam:move(dx / 2, dy / 2)
 end
 
 function love.draw()
