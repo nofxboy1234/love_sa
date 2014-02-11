@@ -5,6 +5,7 @@ local class = require("lib.hump.class")
 -- local camera = require("lib.hump.camera")
 local dbg = require("lib.lua_debugger.debugger")
 
+require("camera")
 require("player")
 require("hitbox")
 
@@ -69,7 +70,7 @@ function love.load()
   -- Add data to Custom Layer
   spriteLayer = map.layers["Sprite Layer"]
   spriteLayer.sprites = {}
-  spriteLayer.sprites.player = Player(64, 64, 400, 400)
+  spriteLayer.sprites.player = Player(1000, 640, 400, 400)
 
 
 
@@ -93,17 +94,41 @@ end
 
 
 function love.update(dt)
-  map:update(dt)
+  -- if love.keyboard.isDown("d") then
+  --   camera.x = camera.x + (camera.speed * dt)
+  -- end
+  -- if love.keyboard.isDown("a") then
+  --   camera.x = camera.x - (camera.speed * dt)
+  -- end
 
+  -- if love.keyboard.isDown("s") then
+  --   camera.y = camera.y + (camera.speed * dt)
+  -- end
+  -- if love.keyboard.isDown("w") then
+  --   camera.y = camera.y - (camera.speed * dt)
+  -- end
+
+
+
+  map:update(dt)
   collider:update(dt)
+
+  camera.x = spriteLayer.sprites.player.x - (0.5 * windowWidth)
+  -- camera.y = spriteLayer.sprites.player.y - (0.87 * windowHeight)
+  camera.y = (0.02 * windowHeight)
+
 
 end
 
 function love.draw()
-  -- cam:attach()
+  camera:set()
 
-  local translateX = spriteLayer.sprites.player.x
-  local translateY = spriteLayer.sprites.player.y
+  -- local translateX = spriteLayer.sprites.player.x
+  -- local translateY = spriteLayer.sprites.player.y
+
+  local translateX = 0
+  local translateY = 0
+
 
   -- Draw Range culls unnecessary tiles
   map:setDrawRange(translateX, translateY, windowWidth, windowHeight)
@@ -121,18 +146,18 @@ function love.draw()
 
   love.graphics.setColor(255, 255, 255, 255)
 
-  -- cam:detach()
+  camera:unset()
 end
 
 function get_joystick()
   joystick_01 = love.joystick.getJoysticks()[1]
 end
 
-function love.keypressed(key, isrepeat)
-  if key == "w" then
-    print("W pressed" .. " " .. tostring(isrepeat))
-  end
-end
+-- function love.keypressed(key, isrepeat)
+--   if key == "w" then
+--     print("W pressed" .. " " .. tostring(isrepeat))
+--   end
+-- end
 
 function on_collision(dt, shape_a, shape_b)
   print("COLLISION!")
