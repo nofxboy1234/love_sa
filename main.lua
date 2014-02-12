@@ -2,7 +2,7 @@ local sti = require "lib.sti.sti"
 local pretty = require("pl.pretty")
 local hc = require("lib.hc")
 local class = require("lib.hump.class")
--- local camera = require("lib.hump.camera")
+local camera = require("lib.hump.camera")
 local dbg = require("lib.lua_debugger.debugger")
 
 require("player")
@@ -89,12 +89,20 @@ function love.load()
 
   get_joystick()
 
+  cam = camera(spriteLayer.sprites.player.x, spriteLayer.sprites.player.y)
+
 end
 
 
 function love.update(dt)
   map:update(dt)
   collider:update(dt)
+
+  -- local dx = spriteLayer.sprites.player.x - cam.x
+  -- local dy = spriteLayer.sprites.player.y - cam.y
+  -- cam:move(dx/2, dy/2)
+
+  cam:lookAt(spriteLayer.sprites.player.x, spriteLayer.sprites.player.y)
 end
 
 function love.draw()
@@ -108,6 +116,8 @@ function love.draw()
   -- Draw Range culls unnecessary tiles
   map:setDrawRange(translateX, translateY, windowWidth, windowHeight)
 
+  cam:attach()
+
   map:draw()
 
   -- Draw Collision Map (useful for debugging)
@@ -120,6 +130,8 @@ function love.draw()
   end
 
   love.graphics.setColor(255, 255, 255, 255)
+
+  cam:detach()
 
 end
 
