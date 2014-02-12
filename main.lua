@@ -16,7 +16,7 @@ function love.load()
   windowHeight = love.graphics.getHeight()
 
   -- Load a map exported to Lua from Tiled
-  map = sti.new("maps/02_01")
+  map = sti.new("maps/03_01")
   -- map = sti.new("maps/test/maps/map02")
 
 
