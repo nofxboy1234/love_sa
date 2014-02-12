@@ -5,7 +5,6 @@ local class = require("lib.hump.class")
 -- local camera = require("lib.hump.camera")
 local dbg = require("lib.lua_debugger.debugger")
 
-require("camera")
 require("player")
 require("hitbox")
 
@@ -94,35 +93,11 @@ end
 
 
 function love.update(dt)
-  -- if love.keyboard.isDown("d") then
-  --   camera.x = camera.x + (camera.speed * dt)
-  -- end
-  -- if love.keyboard.isDown("a") then
-  --   camera.x = camera.x - (camera.speed * dt)
-  -- end
-
-  -- if love.keyboard.isDown("s") then
-  --   camera.y = camera.y + (camera.speed * dt)
-  -- end
-  -- if love.keyboard.isDown("w") then
-  --   camera.y = camera.y - (camera.speed * dt)
-  -- end
-
-
-
   map:update(dt)
   collider:update(dt)
-
-  camera.x = spriteLayer.sprites.player.x - (0.5 * windowWidth)
-  -- camera.y = spriteLayer.sprites.player.y - (0.87 * windowHeight)
-  camera.y = (0.02 * windowHeight)
-
-
 end
 
 function love.draw()
-  camera:set()
-
   -- local translateX = spriteLayer.sprites.player.x
   -- local translateY = spriteLayer.sprites.player.y
 
@@ -146,7 +121,6 @@ function love.draw()
 
   love.graphics.setColor(255, 255, 255, 255)
 
-  camera:unset()
 end
 
 function get_joystick()
