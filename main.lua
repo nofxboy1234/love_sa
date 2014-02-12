@@ -106,15 +106,15 @@ function love.update(dt)
 end
 
 function love.draw()
-  -- local translateX = spriteLayer.sprites.player.x
-  -- local translateY = spriteLayer.sprites.player.y
+  -- local translateX = 0
+  -- local translateY = 0
+  -- local translateX, translateY = cam:worldCoords(0, 0)
+  local translateX, translateY = cam:cameraCoords(0, 0)
 
-  local translateX = 0
-  local translateY = 0
-
+  local w, h = love.graphics.getWidth()/cam.scale, love.graphics.getHeight()/cam.scale
 
   -- Draw Range culls unnecessary tiles
-  map:setDrawRange(translateX, translateY, windowWidth, windowHeight)
+  map:setDrawRange(translateX, translateY, w, h)
 
   cam:attach()
 
