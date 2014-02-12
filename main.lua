@@ -2,11 +2,11 @@ local sti = require "lib.sti.sti"
 local pretty = require("pl.pretty")
 local hc = require("lib.hc")
 local class = require("lib.hump.class")
-local camera = require("lib.hump.camera")
 local dbg = require("lib.lua_debugger.debugger")
 
 require("player")
 require("hitbox")
+require("camera")
 
 local facing_right = true
 
@@ -17,8 +17,6 @@ function love.load()
 
   -- Load a map exported to Lua from Tiled
   map = sti.new("maps/03_01")
-  -- map = sti.new("maps/test/maps/map02")
-
 
   collider = hc(100, on_collision, collision_stop)
 
@@ -89,7 +87,6 @@ function love.load()
 
   get_joystick()
 
-  cam = camera(spriteLayer.sprites.player.x, spriteLayer.sprites.player.y)
 
 end
 
@@ -98,25 +95,20 @@ function love.update(dt)
   map:update(dt)
   collider:update(dt)
 
-  -- local dx = spriteLayer.sprites.player.x - cam.x
-  -- local dy = spriteLayer.sprites.player.y - cam.y
-  -- cam:move(dx/2, dy/2)
-
-  cam:lookAt(spriteLayer.sprites.player.x, 365)
 end
 
 function love.draw()
-  -- local translateX = 0
-  -- local translateY = 0
-  -- local translateX, translateY = cam:worldCoords(0, 0)
-  local translateX, translateY = cam:cameraCoords(0, 0)
+  local translateX = 0
+  local translateY = 0
+  -- local translateX, translateY = cam:cameraCoords(0, 0)
 
-  local w, h = love.graphics.getWidth()/cam.scale, love.graphics.getHeight()/cam.scale
+  -- local w, h = love.graphics.getWidth()/cam.scale, love.graphics.getHeight()/cam.scale
+  local w, h = love.graphics.getWidth()/1, love.graphics.getHeight()/1
 
   -- Draw Range culls unnecessary tiles
   map:setDrawRange(translateX, translateY, w, h)
 
-  cam:attach()
+  -- cam:attach()
 
   map:draw()
 
@@ -131,7 +123,7 @@ function love.draw()
 
   love.graphics.setColor(255, 255, 255, 255)
 
-  cam:detach()
+  -- cam:detach()
 
 end
 
