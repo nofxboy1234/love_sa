@@ -102,7 +102,7 @@ function love.update(dt)
   -- local dy = spriteLayer.sprites.player.y - cam.y
   -- cam:move(dx/2, dy/2)
 
-  cam:lookAt(spriteLayer.sprites.player.x, spriteLayer.sprites.player.y)
+  cam:lookAt(spriteLayer.sprites.player.x, 365)
 end
 
 function love.draw()
