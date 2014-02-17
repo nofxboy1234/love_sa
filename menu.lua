@@ -1,13 +1,13 @@
 function menu_load()
   menu_items = {"start game", "credits", "help", "quit"}
-  title_img = love.graphics.newImage("Resources/Images/SA-01_720.png")
+  title_img = love.graphics.newImage("graphics/SA-01_720.png")
 
-  music = love.audio.newSource("Resources/Sounds/Circlerun_ZEQ2_Select_Your_Game_Mode.mp3", "stream")
+  music = love.audio.newSource("sounds/Circlerun_ZEQ2_Select_Your_Game_Mode.mp3", "stream")
   music:setLooping(true)
   music:setVolume(0.2)
   music:play()
 
-  menu_sound = love.audio.newSource("Resources/Sounds/Menu_Selection_Click.wav", "static")
+  menu_sound = love.audio.newSource("sounds/Menu_Selection_Click.wav", "static")
   -- menu_sound:setVolume(1.0)
 
   menuselection = 1
